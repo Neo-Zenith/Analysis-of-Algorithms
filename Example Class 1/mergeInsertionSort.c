@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void insertionSort(int **Arr, int start, int end, int *keyComparisons);
-void mergeInsertionSort(int **Arr, int start, int end, int S, int *keyComparisons);
-void merge(int **Arr, int start, int end, int pivot, int *keyComparisons);
+void insertionSort(int **Arr, int start, int end, long long *keyComparisons);
+void mergeInsertionSort(int **Arr, int start, int end, int S, long long *keyComparisons);
+void merge(int **Arr, int start, int end, int pivot, long long *keyComparisons);
 void swap(int **Arr, int i, int j);
 
-void mergeInsertionSort(int **Arr, int start, int end, int S, int *keyComparisons)
+void mergeInsertionSort(int **Arr, int start, int end, int S, long long *keyComparisons)
 {
     if (start >= end)
     {
@@ -15,7 +15,7 @@ void mergeInsertionSort(int **Arr, int start, int end, int S, int *keyComparison
 
     int pivot = (start + end) / 2;
 
-    if (end - start + 1 > S)
+    if (end - start > S)
     {
         mergeInsertionSort(Arr, start, pivot, S, keyComparisons);
         mergeInsertionSort(Arr, pivot + 1, end, S, keyComparisons);
@@ -29,7 +29,7 @@ void mergeInsertionSort(int **Arr, int start, int end, int S, int *keyComparison
     }
 }
 
-void merge(int **Arr, int start, int end, int pivot, int *keyComparisons)
+void merge(int **Arr, int start, int end, int pivot, long long *keyComparisons)
 {
     int *sortedArray = (int *) malloc(sizeof(int) * ((end - start) + 1));
 
@@ -74,7 +74,7 @@ void merge(int **Arr, int start, int end, int pivot, int *keyComparisons)
     free(sortedArray);
 }
 
-void insertionSort(int **Arr, int start, int end, int *keyComparisons)
+void insertionSort(int **Arr, int start, int end, long long *keyComparisons)
 {
     for (int i = start + 1; i <= end; i ++)
     {

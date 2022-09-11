@@ -1,36 +1,37 @@
 #include "arrayGenerate.c"
 #include "mergeInsertionSort.c"
 #include "writeOutput.c"
+#include "mergeSort.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX_SIZE 1000
+#define MAX_SIZE 1000000
 
 int main()
 {
-    writeFile("dataForC(i).csv");
+    writeFile("mergeInsertionSortPart2.csv", "Array Size,Key comparisons,Execution time \n");
 
     int S = 16;
     for (int i = 1000; i <= 1000000; i += 1000)
     {  
-        int keyComparisons = 0;
+        long long keyComparisons = 0;
         int *Arr = (int *) malloc(sizeof(int) * i);
         Arr = arrayGenerate(i, MAX_SIZE); 
 
         clock_t begin = clock();
 
         mergeInsertionSort(&Arr, 0, i - 1, S, &keyComparisons);
+        //mergeSort(&Arr, 0, i - 1, &keyComparisons);
 
         clock_t end = clock();
         free(Arr);
         double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-        int time_spent_ms = time_spent * 1000;
         
-        writeIntOutput("dataForC(i).csv", i, ",");
-        writeIntOutput("dataForC(i).csv", keyComparisons, ",");
-        writeIntOutput("dataForC(i).csv", time_spent_ms, "\n");
+        writeIntOutput("mergeInsertionSortPart2.csv", i, ",");
+        writeLongOutput("mergeInsertionSortPart2.csv", keyComparisons, ",");
+        writeDoubleOutput("mergeInsertionSortPart2.csv", time_spent, "\n");
 
-        printf("Array size: %d; \tTime taken: %d\n", i, time_spent_ms);
+        printf("Array size: %d; \tTime taken: %lf\n", i, time_spent);
     }
 }
