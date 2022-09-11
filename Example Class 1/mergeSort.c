@@ -1,29 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void mergeSort(int **Arr, int start, int end);
-void merge(int **Arr, int start, int end, int pivot);
+void mergeSort(int **Arr, int start, int end, int *keyComparisons);
+void merge(int **Arr, int start, int end, int pivot, int *keyComparisons);
 
-int main()
-{
-    int n;
-    scanf("%d", &n);
 
-    int *Arr = (int *) malloc(sizeof(int) * n);
-    for (int i = 0; i < n; i ++)
-    {
-        scanf("%d", &Arr[i]);
-    }
-
-    mergeSort(&Arr, 0, n - 1);
-
-    for (int i = 0; i < n; i ++)
-    {
-        printf("%d ", Arr[i]);
-    }
-}
-
-void mergeSort(int **Arr, int start, int end)
+void mergeSort(int **Arr, int start, int end, int *keyComparisons)
 {
     if (start >= end)
     {
@@ -32,13 +14,13 @@ void mergeSort(int **Arr, int start, int end)
 
     int pivot = (start + end) / 2;
 
-    mergeSort(Arr, start, pivot);
-    mergeSort(Arr, pivot + 1, end);
+    mergeSort(Arr, start, pivot, keyComparisons);
+    mergeSort(Arr, pivot + 1, end, keyComparisons);
 
-    merge(Arr, start, end, pivot);
+    merge(Arr, start, end, pivot, keyComparisons);
 }
 
-void merge(int **Arr, int start, int end, int pivot)
+void merge(int **Arr, int start, int end, int pivot, int *keyComparisons)
 {
     int *sortedArray = (int *) malloc(sizeof(int) * ((end - start) + 1));
 
@@ -48,6 +30,7 @@ void merge(int **Arr, int start, int end, int pivot)
 
     while (i <= pivot && j <= end)
     {
+        (*keyComparisons) ++;
         if ((*Arr)[i] < (*Arr)[j])
         {
             sortedArray[k ++] = (*Arr)[i ++];

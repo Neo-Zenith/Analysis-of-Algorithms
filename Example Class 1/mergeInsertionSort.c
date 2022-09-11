@@ -2,11 +2,11 @@
 #include <stdlib.h>
 
 void insertionSort(int **Arr, int start, int end, int *keyComparisons);
-void mergeSort(int **Arr, int start, int end, int S, int *keyComparisons);
+void mergeInsertionSort(int **Arr, int start, int end, int S, int *keyComparisons);
 void merge(int **Arr, int start, int end, int pivot, int *keyComparisons);
 void swap(int **Arr, int i, int j);
 
-void mergeSort(int **Arr, int start, int end, int S, int *keyComparisons)
+void mergeInsertionSort(int **Arr, int start, int end, int S, int *keyComparisons)
 {
     if (start >= end)
     {
@@ -17,8 +17,8 @@ void mergeSort(int **Arr, int start, int end, int S, int *keyComparisons)
 
     if (end - start + 1 > S)
     {
-        mergeSort(Arr, start, pivot, S, keyComparisons);
-        mergeSort(Arr, pivot + 1, end, S, keyComparisons);
+        mergeInsertionSort(Arr, start, pivot, S, keyComparisons);
+        mergeInsertionSort(Arr, pivot + 1, end, S, keyComparisons);
 
         merge(Arr, start, end, pivot, keyComparisons);
     }
@@ -70,6 +70,8 @@ void merge(int **Arr, int start, int end, int pivot, int *keyComparisons)
     {
         (*Arr)[i] = sortedArray[k ++];
     }
+
+    free(sortedArray);
 }
 
 void insertionSort(int **Arr, int start, int end, int *keyComparisons)

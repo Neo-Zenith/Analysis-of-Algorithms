@@ -1,32 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int writeStringOutput(char *text)
+void writeFile(char *name)
 {
-    FILE *f = fopen("file.txt", "a");
+    FILE *f = fopen(name, "a");
+    fprintf(f,"Array Size,Key comparisons,Execution time \n");
+    fclose(f);
+}
+
+int writeStringOutput(char *name, char *text, char *character)
+{
+    FILE *f = fopen(name, "a");
     if (f == NULL)
     {
         printf("Error opening file!\n");
         exit(1);
     }
 
-    fprintf(f, text);
+    fprintf(f, "%s%s", text, character);
 
     fclose(f);
 
     return 1;
 }
 
-int writeIntOutput(int text)
+int writeIntOutput(char *name, int text, char *character)
 {
-    FILE *f = fopen("file.txt", "a");
+    FILE *f = fopen(name, "a");
     if (f == NULL)
     {
         printf("Error opening file!\n");
         exit(1);
     }
 
-    fprintf(f, "%d ", text);
+    fprintf(f, "%d%s", text, character);
 
     fclose(f);
 
