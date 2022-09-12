@@ -10,9 +10,9 @@
 
 int main()
 {
-    writeFile("mergeInsertionSortPart2.csv", "Threshold Size,Key comparisons,Execution time \n");
+    writeFile("mergeInsertionSortPart2b.csv", "Threshold Size,Key comparisons,Execution time \n");
 
-    int sizeOfArray = 500000;
+    int sizeOfArray = 100000;
     for (int i = 1; i <= sizeOfArray; i *= 2)
     {  
         long long keyComparisons = 0;
@@ -28,9 +28,9 @@ int main()
         free(Arr);
         double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
         
-        writeIntOutput("mergeInsertionSortPart2.csv", i, ",");
-        writeLongOutput("mergeInsertionSortPart2.csv", keyComparisons, ",");
-        writeDoubleOutput("mergeInsertionSortPart2.csv", time_spent, "\n");
+        writeIntOutput("mergeInsertionSortPart2b.csv", i, ",");
+        writeLongOutput("mergeInsertionSortPart2b.csv", keyComparisons, ",");
+        writeDoubleOutput("mergeInsertionSortPart2b.csv", time_spent, "\n");
 
         printf("Threshold size: %d; \tTime taken: %lf\n", i, time_spent);
     }
