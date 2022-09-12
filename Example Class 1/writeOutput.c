@@ -10,7 +10,7 @@ void writeFile(char *name, char *header)
 
 int writeStringOutput(char *name, char *text, char *character)
 {
-    FILE *f = fopen(name, "w");
+    FILE *f = fopen(name, "a");
     if (f == NULL)
     {
         printf("Error opening file!\n");
