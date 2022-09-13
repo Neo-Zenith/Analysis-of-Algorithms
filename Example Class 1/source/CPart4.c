@@ -11,7 +11,7 @@
 
 int main()
 {
-    writeFile("mergeInsertionSortPart4.csv", "Algorithm,Key comparisons,Execution time \n");
+    writeFile("D.csv", "Algorithm,Key comparisons,Execution time\n");
 
     for (int i = 0; i <= 100; i ++)
     {
@@ -28,9 +28,9 @@ int main()
         free(Arr1);
         double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 
-        writeStringOutput("mergeInsertionSortPart4.csv", "Merge-Insertion Sort", ",");
-        writeLongOutput("mergeInsertionSortPart4.csv", keyComparisons, ",");
-        writeDoubleOutput("mergeInsertionSortPart4.csv", time_spent, "\n");
+        writeStringOutput("D.csv", "Merge-Insertion Sort", ",");
+        writeLongOutput("D.csv", keyComparisons, ",");
+        writeDoubleOutput("D.csv", time_spent, "\n");
 
         int *Arr2 = (int *) malloc(sizeof(int) * arraySize);
         Arr2 = arrayGenerate(arraySize, MAX_SIZE); 
@@ -42,8 +42,8 @@ int main()
         free(Arr2);
         time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 
-        writeStringOutput("mergeInsertionSortPart4.csv", "Merge Sort", ",");
-        writeLongOutput("mergeInsertionSortPart4.csv", keyComparisons, ",");
-        writeDoubleOutput("mergeInsertionSortPart4.csv", time_spent, "\n");
+        writeStringOutput("D.csv", "Merge Sort", ",");
+        writeLongOutput("D.csv", keyComparisons, ",");
+        writeDoubleOutput("D.csv", time_spent, "\n");
     }
 }
