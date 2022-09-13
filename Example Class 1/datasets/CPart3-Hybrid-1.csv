@@ -1,4 +1,4 @@
-Array Size,Threshold Size,Key comparisons,Execution time
+Array Size,Threshold Size,Key Comparisons,Execution Time
 1000,1,8329,0.000000
 1000,6,8460,0.000000
 1000,11,8692,0.000000

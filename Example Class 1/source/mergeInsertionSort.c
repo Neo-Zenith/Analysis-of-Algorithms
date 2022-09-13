@@ -6,6 +6,7 @@ void mergeInsertionSort(int **Arr, int start, int end, int S, long long *keyComp
 void merge(int **Arr, int start, int end, int pivot, long long *keyComparisons);
 void swap(int **Arr, int i, int j);
 
+
 void mergeInsertionSort(int **Arr, int start, int end, int S, long long *keyComparisons)
 {
     if (start >= end)
@@ -93,6 +94,7 @@ void insertionSort(int **Arr, int start, int end, long long *keyComparisons)
     }
 }
 
+// Swap the element at index i and index j
 void swap(int **Arr, int i, int j)
 {
     int temp = (*Arr)[i];

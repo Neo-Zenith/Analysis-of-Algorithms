@@ -8,6 +8,7 @@ void writeFile(char *name, char *header)
     fclose(f);
 }
 
+// Function to write a string to the output file
 int writeStringOutput(char *name, char *text, char *character)
 {
     FILE *f = fopen(name, "a");
@@ -24,6 +25,7 @@ int writeStringOutput(char *name, char *text, char *character)
     return 1;
 }
 
+// Function to write an integer to the output file
 int writeIntOutput(char *name, int text, char *character)
 {
     FILE *f = fopen(name, "a");
@@ -40,6 +42,7 @@ int writeIntOutput(char *name, int text, char *character)
     return 1;
 }
 
+// Function to write a long long integer to the output file
 int writeLongOutput(char *name, long long text, char *character)
 {
     FILE *f = fopen(name, "a");
@@ -56,6 +59,7 @@ int writeLongOutput(char *name, long long text, char *character)
     return 1;
 }
 
+// Function to write a float value to the output file
 int writeDoubleOutput(char *name, double text, char *character)
 {
     FILE *f = fopen(name, "a");

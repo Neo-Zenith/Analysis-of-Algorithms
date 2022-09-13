@@ -7,11 +7,9 @@
 #include <time.h>
 #include <math.h>
 
-#define MAX_SIZE 1000
-
 int main()
 {
-    writeFile("D.csv", "Algorithm,Key comparisons,Execution time\n");
+    writeFile("D.csv", "Algorithm,Key Comparisons,Execution Time\n");
 
     for (int i = 0; i <= 100; i ++)
     {
@@ -20,7 +18,7 @@ int main()
         int s = log(arraySize) / log(2);
 
         int *Arr1 = (int *) malloc(sizeof(int) * arraySize);
-        Arr1 = arrayGenerate(arraySize, MAX_SIZE); 
+        Arr1 = arrayGenerate(arraySize, arraySize); 
 
         clock_t begin = clock();
         mergeInsertionSort(&Arr1, 0, arraySize - 1, s, &keyComparisons);
@@ -33,7 +31,7 @@ int main()
         writeDoubleOutput("D.csv", time_spent, "\n");
 
         int *Arr2 = (int *) malloc(sizeof(int) * arraySize);
-        Arr2 = arrayGenerate(arraySize, MAX_SIZE); 
+        Arr2 = arrayGenerate(arraySize, arraySize); 
         keyComparisons = 0;
 
         begin = clock(); 
