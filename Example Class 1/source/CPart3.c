@@ -8,7 +8,7 @@
 
 int main()
 {
-    writeFile("CPart3-Hybrid-2.csv", "Array Size,Threshold Size,Key Comparisons,Execution Time\n");
+    writeFile("CPart3-Hybrid-1.csv", "Array Size,Threshold Size,Key Comparisons,Execution Time\n");
 
     // Iterate through different values of array size with multiples of 10
     for (int i = 1000; i <= 10000000; i *= 10)
@@ -16,7 +16,7 @@ int main()
         printf("Array length: %d\n", i);
 
         // Iterate through different values of threshold S
-        for (int j = 1; j <= 1000; j *= 2)
+        for (int j = 1; j <= 100; j += 5)
         {
             long long keyComparisons = 0;
             int *Arr = (int *) malloc(sizeof(int) * i);
@@ -29,10 +29,10 @@ int main()
             free(Arr);
             double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
             
-            writeIntOutput("CPart3-Hybrid-2.csv", i, ",");
-            writeIntOutput("CPart3-Hybrid-2.csv", j, ",");
-            writeLongOutput("CPart3-Hybrid-2.csv", keyComparisons, ",");
-            writeDoubleOutput("CPart3-Hybrid-2.csv", time_spent, "\n");
+            writeIntOutput("CPart3-Hybrid-1.csv", i, ",");
+            writeIntOutput("CPart3-Hybrid-1.csv", j, ",");
+            writeLongOutput("CPart3-Hybrid-1.csv", keyComparisons, ",");
+            writeDoubleOutput("CPart3-Hybrid-1.csv", time_spent, "\n");
 
             printf("Threshold size: %d; \tTime taken: %lf\n", j, time_spent);
         }
