@@ -26,16 +26,18 @@ void benchmarkDifThreshSize2();
 void benchmarkDifThresArraySize1();
 void benchmarkDifThresArraySize2();
 void benchmarkFinal(int S);
+void benchmarkRepeatedMerge();
 
 int main()
 {
-    benchmarkDifArraySize();
+    //benchmarkDifArraySize();
     //benchmarkDifArraySizeMerge();
     //benchmarkDifThreshSize1();
     //benchmarkDifThreshSize2();
     //benchmarkDifThresArraySize1();
     //benchmarkDifThresArraySize2();
-    //benchmarkFinal(log(10000000) / log(2));
+    //benchmarkRepeatedMerge();
+    benchmarkFinal(25);
 }
 
 
@@ -286,6 +288,43 @@ void benchmarkDifThresArraySize2()
     printf("Execution complete... \n\n");
 }
 
+void benchmarkRepeatedMerge()
+{
+    printf("Executing task: Generate sample for array size = 10 mil\n");
+    printf("Algorithm: Merge Sort Algorithm\n");
+
+    writeFile("../datasets/RepeatedMerge.csv", "Threshold Size,Key Comparisons,Elapsed Time\n");
+
+    // Iterate 100 times
+    for (int i = 1; i <= 100; i += 1)
+    {  
+        // Intialising variables
+        long long keyComparisons = 0;
+        int *Arr = (int *) malloc(sizeof(int) * i);
+
+        // Generate the random array
+        Arr = arrayGenerate(10000000, 10000000); 
+
+        clock_t begin = clock();    // Function to keep track of CPU time (start)
+        //mergeInsertionSort(&Arr, 0, i - 1, S, &keyComparisons);
+        mergeSort(&Arr, 0, 10000000 - 1, &keyComparisons);
+        clock_t end = clock();      // Function to keep track of CPU time (end)
+        free(Arr);
+        float time_spent = (float)(end - begin) / CLOCKS_PER_SEC;     // Get time spent
+        
+        // Write the output to file
+        writeIntOutput("../datasets/RepeatedMerge.csv", i, ",");
+        writeLongOutput("../datasets/RepeatedMerge.csv", keyComparisons, ",");
+        writeDoubleOutput("../datasets/RepeatedMerge.csv", time_spent, "\n");
+
+        // Print for debug
+        printf("Threshold size: %d;\t", i);
+        printf("Key comparisons: %ld;\t", keyComparisons);
+        printf("Time elapsed: %lf\n", time_spent);
+    }
+
+    printf("Execution complete... \n\n");
+}
 // Final benchmark for the hybrid algorithm with optimum threshold value
 // int S == optimal threshold value
 void benchmarkFinal(int S)
