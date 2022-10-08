@@ -7,11 +7,6 @@
 // dist is the distance of the vertex from start
 void insert(QueueNode queue[MAX], int *tail, int vertex, int dist)
 {
-    if (*tail >= MAX)       // prevent buffer overflow and segfault by restricting access beyond MAX
-    {
-        return;
-    }
-
     (*tail) ++;             // increments the size of queue by 1
 
     // add the vertex to the queue
@@ -67,7 +62,7 @@ int peek(QueueNode queue[MAX], int *tail, int *index)
             *index = i;
         }
     }
-
+    
     return highestPriorityVertex;
 }
 

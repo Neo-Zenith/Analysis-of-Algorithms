@@ -25,7 +25,7 @@
 
 
 // dijkstra's shortest path search algorithm implemented using min heap priority queue
-void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist)
+void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist, long long *keyComparisons)
 {
     QueueNode pQueue[MAX];              // priority queue
     int tail = -1;                      // initialize end of queue to be -1 (queue is empty)
@@ -33,7 +33,7 @@ void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist
     // default value initialization
     for (int i = 1; i <= g->V; i ++)
     {
-        visited[i] = 0;
+        visited[i] = (i != start) ? 0: 1;
         dist[i] = MAX_DIST;
         parent[i] = -1;
     }
@@ -43,17 +43,14 @@ void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist
     // put all adjacent vertex to start to priority queue
     while (ptr != NULL)
     {
-        if (ptr->weight != -1) 
-        {
-            insert(pQueue, &tail, ptr->vertex, ptr->weight);        // insert will build minheap everytime
-            dist[ptr->vertex] = ptr->weight;
-            parent[ptr->vertex] = start;
-        }
+        (*keyComparisons) ++;
+        insert(pQueue, &tail, ptr->vertex, ptr->weight);        // insert will build minheap everytime
+        dist[ptr->vertex] = ptr->weight;
+        parent[ptr->vertex] = start;
         ptr = ptr->next;
     }
 
     // we have visited start
-    visited[start] = 1;
     dist[start] = 0;
 
     while (! isEmptyQueue(pQueue, &tail))
@@ -69,7 +66,8 @@ void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist
                 1. not yet visited
                 2. weight(target, i) + dist[target] is smaller than dist[i]
             */
-            if (visited[ptr->vertex] != 1 && ptr->weight != -1 && ptr->weight + dist[target] < dist[ptr->vertex]) 
+            (*keyComparisons) ++;
+            if (visited[ptr->vertex] != 1 && ptr->weight + dist[target] < dist[ptr->vertex]) 
             {
                 dist[ptr->vertex] = ptr->weight + dist[target];
                 insert(pQueue, &tail, ptr->vertex, dist[ptr->vertex]);      // put into queue
@@ -91,18 +89,19 @@ void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist
 
 
 // dijkstra's shortest path search algorithm implemented using array-based priority queue
-void ArrayPathSearch(Graph *g, int start, int *visited, int *dist, int *parent)
+void ArrayPathSearch(Graph *g, int start, int *visited, int *dist, int *parent, long long *keyComparisons)
 {
     QueueNode pQueue[MAX];
     int tail = -1;
 
     for (int i = 1; i <= g->V; i ++)
     {
-        visited[i] = 0;
+        visited[i] = (i != start) ? 0: 1;
         dist[i] = MAX_DIST;
         parent[i] = -1;
     
-        if (g->adjMatrix[start][i] != -1) 
+        (*keyComparisons) ++;
+        if (visited[i] != 1 && g->adjMatrix[start][i] != -1) 
         {
             // enqueue incurs O(1) since it just appends to end of queue
             enqueue(pQueue, &tail, i, g->adjMatrix[start][i]);      
@@ -111,7 +110,6 @@ void ArrayPathSearch(Graph *g, int start, int *visited, int *dist, int *parent)
         }
     }
 
-    visited[start] = 1;
     dist[start] = 0;
 
     while (! isEmptyQueue(pQueue, &tail))
@@ -129,8 +127,9 @@ void ArrayPathSearch(Graph *g, int start, int *visited, int *dist, int *parent)
         
         for (int i = 1; i <= g->V; i ++)
         {
+            (*keyComparisons) ++;
             if (visited[i] != 1 && g->adjMatrix[target][i] != -1 && g->adjMatrix[target][i] + dist[target] < dist[i]) 
-            {
+            {     
                 dist[i] = g->adjMatrix[target][i] + dist[target];
                 enqueue(pQueue, &tail, i, dist[i]);
                 parent[i] = target;
@@ -142,7 +141,7 @@ void ArrayPathSearch(Graph *g, int start, int *visited, int *dist, int *parent)
         printf("\n");
         for (int i = 1; i <= g->V; i ++)
         {
-            printf("%d ", dist[i]);
+            printf("%d ", visited[i]);
         }
     */
 }

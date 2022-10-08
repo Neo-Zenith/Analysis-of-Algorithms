@@ -1,7 +1,7 @@
 #ifndef STRUCTURES_H_
 #define STRUCTURES_H_
 #define MAX 10000
-#define MAX_DIST 10000
+#define MAX_DIST 100000000
 
 typedef struct graphNode
 {

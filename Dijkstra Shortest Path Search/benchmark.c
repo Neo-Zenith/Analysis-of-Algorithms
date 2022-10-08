@@ -15,27 +15,29 @@ void benchmarkPartA()
     printf("Priority Queue: \tVanilla Array");
     printf("\n===== Initialization =====\n");
     char *file = "./datasets/PartA.csv";
-    writeFile(file, "Vertices,Edges,Elapsed Time\n");
+    writeFile(file, "Vertices,Edges,Elapsed Time,Key Comparisons\n");
     printf("Initialization Completed!\n");
 
-    for (int i = 100; i <= 2500; i += 100)
+    for (int i = 100; i <= 5000; i += 100)
     {
         printf("\n===== Epoch Size %d =====\n", i);
-        for (int j = 1; j < i - 1; j *= 2)
+        int edgeList[5] = {2, (i - 1) / 4, (i - 1) / 2, 3 * (i - 1) / 4, i - 1};
+        for (int j = 0; j < 5; j ++)
         {
             Graph *g = (Graph *) malloc(sizeof(Graph));
-            buildGraph(g, i, j);
+            buildGraph(g, i, edgeList[j]);
             //printAdjMatrix(g);    //  for debug
             //printAdjList(g);      //  for debug
             float sumOfTime = 0;
-            for (int k = 1; k <= i; k ++)
+            long long keyComparisons = 0;
+            for (int k = 2; k <= i; k ++)
             {
                 int *visited = (int *) malloc(sizeof(int) * (g->V + 1));
                 int *dist = (int *) malloc(sizeof(int) * (g->V + 1));
                 int *parent = (int *) malloc(sizeof(int) * (g->V + 1));
                 
                 clock_t begin = clock();    // FKeep track of CPU time (start)
-                ArrayPathSearch(g, k, visited, dist, parent);
+                ArrayPathSearch(g, k, visited, dist, parent, &keyComparisons);
                 clock_t end = clock();    // FKeep track of CPU time (start)
                 sumOfTime += ((float)(end - begin) / CLOCKS_PER_SEC);     // Get time spent
 
@@ -49,10 +51,13 @@ void benchmarkPartA()
             free(g);
 
             float avgTime = sumOfTime / i;
+            long long avgKeyComparisons = keyComparisons / i;
             writeIntOutput(file, g->V, ",");
             writeIntOutput(file, g->E, ",");
-            writeDoubleOutput(file, avgTime, "\n");
+            writeDoubleOutput(file, avgTime, ",");
+            writeLongOutput(file, avgKeyComparisons, "\n");
             printf("===== Epoch Completed! =====\n");
+            printf("Block comparisons: %lld\n", avgKeyComparisons);
             printf("Block runtime: %.4fs\n", avgTime);
             printf("Total runtime: %.4fs\n", sumOfTime);
         }
@@ -69,13 +74,13 @@ void benchmarkPartB()
     printf("Priority Queue: \tMin Heap");
     printf("\n===== Initialization =====\n");
     char *file = "./datasets/PartB.csv";
-    writeFile(file, "Vertices,Edges,Elapsed Time\n");
+    writeFile(file, "Vertices,Edges,Elapsed Time,Key Comparisons\n");
     printf("Initialization Completed!\n");
 
     for (int i = 100; i <= 2500; i += 100)
     {
-        int edgeList[5] = {1, (i - 1) / 4, (i - 1) / 2, 3*(i - 1)/4, i - 1};
         printf("\n===== Epoch Size %d =====\n", i);
+        int edgeList[5] = {2, (i - 1) / 4, (i - 1) / 2, 3 * (i - 1) / 4, i - 1};
         for (int j = 0; j < 5; j ++)
         {
             Graph *g = (Graph *) malloc(sizeof(Graph));
@@ -83,6 +88,7 @@ void benchmarkPartB()
             //printAdjMatrix(g);    //  for debug
             //printAdjList(g);      //  for debug
             float sumOfTime = 0;
+            long long keyComparisons = 0;
             for (int k = 1; k <= i; k ++)
             {
                 int *visited = (int *) malloc(sizeof(int) * (g->V + 1));
@@ -90,13 +96,14 @@ void benchmarkPartB()
                 int *parent = (int *) malloc(sizeof(int) * (g->V + 1));
                 
                 clock_t begin = clock();    // FKeep track of CPU time (start)
-                MinHeapPathSearch(g, k, visited, dist, parent);
+                MinHeapPathSearch(g, k, visited, dist, parent, &keyComparisons);
                 clock_t end = clock();    // FKeep track of CPU time (start)
                 sumOfTime += ((float)(end - begin) / CLOCKS_PER_SEC);     // Get time spent
 
                 free(visited);
                 free(parent);
                 free(dist);
+                
             }
 
             free(g->adjList);
@@ -104,10 +111,13 @@ void benchmarkPartB()
             free(g);
 
             float avgTime = sumOfTime / i;
+            long long avgKeyComparisons = keyComparisons / i;
             writeIntOutput(file, g->V, ",");
             writeIntOutput(file, g->E, ",");
-            writeDoubleOutput(file, avgTime, "\n");
+            writeDoubleOutput(file, avgTime, ",");
+            writeLongOutput(file, avgKeyComparisons, "\n");
             printf("===== Epoch Completed! =====\n");
+            printf("Block comparisons: %lld\n", avgKeyComparisons);
             printf("Block runtime: %.4fs\n", avgTime);
             printf("Total runtime: %.4fs\n", sumOfTime);
         }
