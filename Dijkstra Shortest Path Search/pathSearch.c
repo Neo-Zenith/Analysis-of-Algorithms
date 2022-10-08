@@ -53,7 +53,7 @@ void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist
     // printf("\n");
     // for (int i = 1; i <= g->V; i ++)
     // {
-    //     printf("%d ", parent[i]);
+    //     printf("%d ", dist[i]);
     // }
     free(ptr);
 }
@@ -111,7 +111,7 @@ void printAdjMatrix(Graph *g)
     {
         for (int j = 1; j <= g->V; j ++)
         {
-            (g->adjMatrix[i][j] != -1) ? printf("%d\t", g->adjMatrix[i][j]): printf("#\t");
+            (g->adjMatrix[i][j] != -1) ? printf("%d ", g->adjMatrix[i][j]): printf("# ");
         }
         printf("\n");
     }

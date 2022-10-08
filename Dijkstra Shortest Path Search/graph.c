@@ -34,31 +34,20 @@ void buildAdjList(Graph g)
     }
 }
 
-void buildGraph(Graph *g, int size)
+void buildGraph(Graph *g, int size, int out)
 {
-    printf("===== Building Graph =====\n");
-    g->E = 0;
+    printf("===== Building Graph with %d Edges=====\n", out);
+    g->E = out * size;
     g->V = size;
 
     g->adjMatrix = (int **) malloc(sizeof(int *) * (g->V + 1));
     g->adjList= (GraphNode **) malloc(sizeof(GraphNode *) * (g->V + 1));
 
-    graphGenerate(size, 10, 0, g->adjMatrix);
+    generateConnectedGraph(size, out, 100, g->adjMatrix);
 
     for (int i = 0; i <= g->V; i ++)
     {
         g->adjList[i] = NULL;
-    }
-
-    for (int i = 1; i <= g->V; i ++)
-    {
-        for (int j = 1; j <= g->V; j ++)
-        {
-            if (g->adjMatrix[i][j] != -1)
-            {
-                g->E ++;
-            }
-        }
     }
 
     buildAdjList(*g);
