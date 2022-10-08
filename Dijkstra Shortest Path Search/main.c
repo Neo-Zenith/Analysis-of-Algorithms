@@ -5,6 +5,6 @@
 
 int main()
 {
-    //benchmarkPartA();
-    benchmarkPartB();
+    benchmarkPartA();
+    //benchmarkPartB();
 }

@@ -20,12 +20,11 @@ void benchmarkPartA()
 
     for (int i = 100; i <= 2500; i += 100)
     {
-        int edgeList[5] = {1, (i - 1) / 4, (i - 1) / 2, 3*(i - 1)/4, i - 1};
         printf("\n===== Epoch Size %d =====\n", i);
-        for (int j = 0; j < 5; j ++)
+        for (int j = 1; j < i - 1; j *= 2)
         {
             Graph *g = (Graph *) malloc(sizeof(Graph));
-            buildGraph(g, i, edgeList[j]);
+            buildGraph(g, i, j);
             //printAdjMatrix(g);    //  for debug
             //printAdjList(g);      //  for debug
             float sumOfTime = 0;

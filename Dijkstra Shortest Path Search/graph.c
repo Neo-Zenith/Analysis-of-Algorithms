@@ -3,6 +3,9 @@
 #include "structures.h"
 #include "graphGenerate.c"
 
+
+// helper function when building adjacency list
+// basically a linked list insert to the end function
 void enqueueGraphNode(GraphNode **head, int vertex, int weight)
 {
     GraphNode *newNode = (GraphNode *) malloc(sizeof(GraphNode));
@@ -20,6 +23,7 @@ void enqueueGraphNode(GraphNode **head, int vertex, int weight)
     *head = newNode;
 }
 
+// build adj list from adj matrix
 void buildAdjList(Graph g)
 {
     for (int i = 1; i <= g.V; i ++)
@@ -34,6 +38,7 @@ void buildAdjList(Graph g)
     }
 }
 
+// driver function to build graph with size vertices and out edges for each vertex
 void buildGraph(Graph *g, int size, int out)
 {
     printf("===== Building Graph with %d Edges=====\n", out);
@@ -43,6 +48,7 @@ void buildGraph(Graph *g, int size, int out)
     g->adjMatrix = (int **) malloc(sizeof(int *) * (g->V + 1));
     g->adjList= (GraphNode **) malloc(sizeof(GraphNode *) * (g->V + 1));
 
+    // generate the graph in matrix form
     generateConnectedGraph(size, out, 100, g->adjMatrix);
 
     for (int i = 0; i <= g->V; i ++)
@@ -50,6 +56,7 @@ void buildGraph(Graph *g, int size, int out)
         g->adjList[i] = NULL;
     }
 
+    // build the adjacency list
     buildAdjList(*g);
     printf("Graph Compiled!\n");
 }
