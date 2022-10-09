@@ -93,3 +93,39 @@ int dequeue(QueueNode queue[MAX], int *tail)
 
     return vertex;
 }
+
+
+// same as peek for custom data structure priority queue
+// except this is for vanilla array
+// we use the existing dist array to find the extrema
+int findExtrema(int *dist, int *visited, int vertex, bool maxMin)
+{
+    int highestPriority;
+    int highestPriorityIndex = -1;
+    if (maxMin)     
+    {
+        highestPriority = -1;
+        for (int i = 1; i <= vertex; i ++)
+        {
+            if (dist[i] > highestPriority && ! visited[i])
+            {
+                highestPriority = dist[i];
+                highestPriorityIndex = i;
+            }
+        }
+    }
+    else
+    {
+        highestPriority = MAX_DIST;
+        for (int i = 1; i <= vertex; i ++)
+        {
+            if (dist[i] < highestPriority && ! visited[i])
+            {
+                highestPriority = dist[i];
+                highestPriorityIndex = i;
+            }
+        }
+    }
+
+    return highestPriorityIndex;
+}

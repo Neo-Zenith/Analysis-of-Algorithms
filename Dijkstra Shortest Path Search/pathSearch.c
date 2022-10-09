@@ -114,14 +114,6 @@ void ArrayPathSearch(Graph *g, int start, int *visited, int *dist, int *parent, 
 
     while (! isEmptyQueue(pQueue, &tail))
     {
-        // here dequeue incurs at worst-case O(vertex) complexity 
-        /*
-            How worst-case occurs?
-                When queue is almost full
-            
-            Regardless dequeue will incur O(n) complexity where n = size of queue
-            if n == vertex, then O(vertex)
-        */
         int target = dequeue(pQueue, &tail);
         visited[target] = 1;
         
@@ -145,6 +137,55 @@ void ArrayPathSearch(Graph *g, int start, int *visited, int *dist, int *parent, 
         }
     */
 }
+
+
+// dijkstra's shortest path search algorithm implemented using vanilla array
+void VanillaArrayPathSearch(Graph *g, int start, int *visited, int *dist, int *parent, long long *keyComparisons)
+{
+    for (int i = 1; i <= g->V; i ++)
+    {
+        visited[i] = (i != start) ? 0: 1;
+        dist[i] = MAX_DIST;
+        parent[i] = -1;
+    
+        (*keyComparisons) ++;
+        if (visited[i] != 1 && g->adjMatrix[start][i] != -1) 
+        {    
+            dist[i] = g->adjMatrix[start][i];
+            parent[i] = start;
+        }
+    }
+
+    dist[start] = 0;
+    int count = 1;
+    
+    while (count < g->V)
+    {
+        int target = findExtrema(dist, visited, g->V, false);
+        visited[target] = 1;
+        
+        for (int i = 1; i <= g->V; i ++)
+        {
+            (*keyComparisons) ++;
+            if (visited[i] != 1 && g->adjMatrix[target][i] != -1 && g->adjMatrix[target][i] + dist[target] < dist[i]) 
+            {     
+                dist[i] = g->adjMatrix[target][i] + dist[target];
+                parent[i] = target;
+            }
+        }
+
+        count ++;
+    }
+
+    /*  DEBUG
+        printf("\n");
+        for (int i = 1; i <= g->V; i ++)
+        {
+            printf("%d ", visited[i]);
+        }
+    */
+}
+
 
 // helper function to print the adjacency matrix
 void printAdjMatrix(Graph *g)
