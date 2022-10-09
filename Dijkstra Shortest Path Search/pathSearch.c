@@ -88,57 +88,6 @@ void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist
 }
 
 
-// dijkstra's shortest path search algorithm implemented using array-based priority queue
-void ArrayPathSearch(Graph *g, int start, int *visited, int *dist, int *parent, long long *keyComparisons)
-{
-    QueueNode pQueue[MAX];
-    int tail = -1;
-
-    for (int i = 1; i <= g->V; i ++)
-    {
-        visited[i] = (i != start) ? 0: 1;
-        dist[i] = MAX_DIST;
-        parent[i] = -1;
-    
-        (*keyComparisons) ++;
-        if (visited[i] != 1 && g->adjMatrix[start][i] != -1) 
-        {
-            // enqueue incurs O(1) since it just appends to end of queue
-            enqueue(pQueue, &tail, i, g->adjMatrix[start][i]);      
-            dist[i] = g->adjMatrix[start][i];
-            parent[i] = start;
-        }
-    }
-
-    dist[start] = 0;
-
-    while (! isEmptyQueue(pQueue, &tail))
-    {
-        int target = dequeue(pQueue, &tail);
-        visited[target] = 1;
-        
-        for (int i = 1; i <= g->V; i ++)
-        {
-            (*keyComparisons) ++;
-            if (visited[i] != 1 && g->adjMatrix[target][i] != -1 && g->adjMatrix[target][i] + dist[target] < dist[i]) 
-            {     
-                dist[i] = g->adjMatrix[target][i] + dist[target];
-                enqueue(pQueue, &tail, i, dist[i]);
-                parent[i] = target;
-            }
-        }
-    }
-
-    /*  DEBUG
-        printf("\n");
-        for (int i = 1; i <= g->V; i ++)
-        {
-            printf("%d ", visited[i]);
-        }
-    */
-}
-
-
 // dijkstra's shortest path search algorithm implemented using vanilla array
 void VanillaArrayPathSearch(Graph *g, int start, int *visited, int *dist, int *parent, long long *keyComparisons)
 {

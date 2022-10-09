@@ -45,55 +45,6 @@ int isEmptyQueue(QueueNode queue[MAX], int *tail)
     return 0;
 }
 
-// returns the vertex with the lowest dist value from an array
-// *index is a variable passed by reference for the index of the vertex to be deleted in the array
-// this function is only called by dequeue to prevent double accessing array just to obtain the vertex
-int peek(QueueNode queue[MAX], int *tail, int *index)
-{
-    int highestPriority = MAX_DIST;   
-    int highestPriorityVertex = -1; 
-
-    for (int i = 0; i <= *tail; i ++)
-    {
-        if (queue[i].dist < highestPriority)
-        {
-            highestPriority = queue[i].dist;  
-            highestPriorityVertex = queue[i].vertex;
-            *index = i;
-        }
-    }
-    
-    return highestPriorityVertex;
-}
-
-// enqueue adds a vertex into the priority queue array
-void enqueue(QueueNode queue[MAX], int *tail, int vertex, int dist)
-{
-    if (*tail >= MAX)
-    {
-        return;
-    }
-
-    (*tail) ++;
-    queue[*tail].vertex = vertex;
-    queue[*tail].dist = dist;
-}
-
-// dequeue removes and returns the vertex with lowest dist value
-int dequeue(QueueNode queue[MAX], int *tail)
-{
-    int index;      // get the location of the vertex to be removed
-    int vertex = peek(queue, tail, &index);     // vertex to be removed
-
-    for (int i = index; i <= *tail; i ++)
-    {
-        queue[i] = queue[i + 1];            // remove the vertex
-    }
-    (*tail) --;         // decrement queue size by 1
-
-    return vertex;
-}
-
 
 // same as peek for custom data structure priority queue
 // except this is for vanilla array
