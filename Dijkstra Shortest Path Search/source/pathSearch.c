@@ -44,7 +44,7 @@ void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist
     while (ptr != NULL)
     {
         (*keyComparisons) ++;
-        insert(pQueue, &tail, ptr->vertex, ptr->weight);        // insert will build minheap everytime
+        enqueue(pQueue, &tail, ptr->vertex, ptr->weight);     
         dist[ptr->vertex] = ptr->weight;
         parent[ptr->vertex] = start;
         ptr = ptr->next;
@@ -55,9 +55,9 @@ void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist
 
     while (! isEmptyQueue(pQueue, &tail))
     {
-        int target = getFront(pQueue);      // expand the vertex with smallest dist
+        int target = dequeue(pQueue, &tail);      // expand the vertex with smallest dist
+
         visited[target] = 1;
-        delete(pQueue, &tail);              // remove from queue
 
         GraphNode *ptr = g->adjList[target];
         while (ptr != NULL)
@@ -70,7 +70,7 @@ void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist
             if (visited[ptr->vertex] != 1 && ptr->weight + dist[target] < dist[ptr->vertex]) 
             {
                 dist[ptr->vertex] = ptr->weight + dist[target];
-                insert(pQueue, &tail, ptr->vertex, dist[ptr->vertex]);      // put into queue
+                enqueue(pQueue, &tail, ptr->vertex, dist[ptr->vertex]);      // put into queue
                 parent[ptr->vertex] = target;
             }
             ptr = ptr->next;
@@ -81,7 +81,7 @@ void MinHeapPathSearch(Graph *g, int start, int *visited, int *parent, int *dist
         printf("\n");
         for (int i = 1; i <= g->V; i ++)
         {
-            printf("%d ", dist[i]);
+            printf("%d ", visited[i]);
         }
     */
     free(ptr);          // remember to free any unusued dynamically allocated variables!!

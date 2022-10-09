@@ -5,37 +5,18 @@
 // *tail is a variable passed by reference for the last valid index in the queue
 // vertex is the vertex to be added into queue
 // dist is the distance of the vertex from start
-void insert(QueueNode queue[MAX], int *tail, int vertex, int dist)
+void enqueue(QueueNode queue[MAX], int *tail, int vertex, int dist)
 {
-    (*tail) ++;             // increments the size of queue by 1
-
-    // add the vertex to the queue
-    queue[*tail].vertex = vertex;       
-    queue[*tail].dist = dist;
-
-    buildMinHeap(queue, tail);      // build a min heap from the queue based off dist values
+    insert(queue, tail, vertex, dist);
 }
 
-// deletes the root (minimum) from the min heap priority queue
-void delete(QueueNode queue[MAX], int *tail)
+// deletes and returns the root (minimum) from the min heap priority queue
+int dequeue(QueueNode queue[MAX], int *tail)
 {
-    // since the priority queue is a min heap, the first index is the vertex with lowest dist value
-    // remove first index will suffice
-    for (int i = 0; i < *tail; i ++)
-    {
-        queue[i] = queue[i + 1];    
-    }
-
-    (*tail) --;         // decrement queue size
+    return extractMin(queue, tail);
 }
 
-// returns the vertex with the lowest dist value from the min heap priority queue
-int getFront(QueueNode queue[MAX])
-{
-    return queue[0].vertex;
-}
-
-// check if the priority queue is empty
+// check if the min heap priority queue is empty
 int isEmptyQueue(QueueNode queue[MAX], int *tail)
 {
     if (*tail < 0)
@@ -46,8 +27,6 @@ int isEmptyQueue(QueueNode queue[MAX], int *tail)
 }
 
 
-// same as peek for custom data structure priority queue
-// except this is for vanilla array
 // we use the existing dist array to find the extrema
 int findExtrema(int *dist, int *visited, int vertex, bool maxMin)
 {

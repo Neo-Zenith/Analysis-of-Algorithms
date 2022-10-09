@@ -6,7 +6,8 @@ void heapify(QueueNode queue[MAX], int *tail, int root, bool maxMin);
 void heapSort(QueueNode queue[MAX], int *tail, bool maxMin);
 void buildMaxHeap(QueueNode queue[MAX], int *tail);
 void buildMinHeap(QueueNode queue[MAX], int *tail);
-
+int extractMax(QueueNode queue[MAX], int *tail);
+int extractMin(QueueNode queue[MAX], int *tail);
 
 // function to transform an array-based tree into a heap
 /*  Algorithm (for maxHeap)
@@ -52,6 +53,49 @@ void swap(QueueNode *a, QueueNode *b)
     *b = temp;
 }
 
+// function to extract the max value vertex from the priority queue
+int extractMax(QueueNode queue[MAX], int *tail)
+{
+    int max = queue[0].vertex;
+    queue[0] = queue[*tail];
+
+    (*tail) --;
+    heapify(queue, tail, 0, true);
+    return max;
+}
+
+// function to extract the min value vertex from the priority queue
+int extractMin(QueueNode queue[MAX], int *tail)
+{
+    int min = queue[0].vertex;
+    queue[0] = queue[*tail];
+
+    (*tail) --;
+    heapify(queue, tail, 0, false);
+    return min;
+}
+
+
+// function to insert a new node into the priority queue
+// recursively pass the node up the tree if it satisfies the condition (max or min)
+void insert(QueueNode queue[MAX], int *tail, int vertex, int dist)
+{
+    (*tail) ++;
+    queue[*tail].vertex = vertex;
+    queue[*tail].dist = dist;
+
+    int parent = *tail / 2;
+    int index = *tail;
+
+    while (index > 0 && queue[parent].dist < queue[index].dist)
+    {
+        swap(&queue[parent], &queue[index]);
+        index = parent;
+        parent = index / 2;
+    }
+}
+
+
 // function to build a maximum heap
 /*  Algorithm
         1. Starting with the rightmost node with children (i.e. rightmost node at level height - 1)
@@ -78,6 +122,7 @@ void buildMinHeap(QueueNode queue[MAX], int *tail)
         heapify(queue, tail, i, false);
     }
 }
+
 
 // heapsort algorithm to sort an array 
 /*  Algorithm:

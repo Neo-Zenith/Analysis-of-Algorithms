@@ -75,11 +75,11 @@ void benchmarkPartB()
     printf("Graph: \tAdjacency List\n");
     printf("Priority Queue: \tMin Heap");
     printf("\n===== Initialization =====\n");
-    char *file = "./datasets/PartB.csv";
+    char *file = "../datasets/PartB.csv";
     writeFile(file, "Vertices,Edges,Elapsed Time,Key Comparisons\n");
     printf("Initialization Completed!\n");
 
-    for (int i = 100; i <= 2000; i += 100)
+    for (int i = 1700; i <= 2000; i += 100)
     {
         printf("\n===== Epoch Size %d =====\n", i);
         int edgeList[5] = {2, (i - 1) / 4, (i - 1) / 2, 3 * (i - 1) / 4, i - 1};
